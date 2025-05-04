@@ -1,0 +1,8 @@
+    
+Capas densas para cnn.py utilizadas originalmente
+        self.model.add(GlobalAveragePooling2D())
+        self.model.add(Dense(256, activation='relu', kernel_regularizer=l2(0.001)))
+        self.model.add(Dropout(0.3))
+        self.model.add(Dense(64, activation='relu', kernel_regularizer=l2(0.001)))
+        self.model.add(Dropout(0.3)) 
+        self.model.add(Dense(9, activation='softmax'))
