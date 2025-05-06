@@ -17,35 +17,33 @@ class Propuesta_rgb:
     def CrearModelo(self):
         # Creación del modelo
         self.model = Sequential()
-        self.model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(196, 196, 3), kernel_regularizer=l2(0.001)))
+        self.model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(128, 128, 3), kernel_regularizer=l2(0.001)))
         self.model.add(BatchNormalization())
         self.model.add(MaxPooling2D((2, 2)))
-        self.model.add(Dropout(0.3))
+        self.model.add(Dropout(0.4))
 
         self.model.add(Conv2D(64, (3, 3), activation='relu', kernel_regularizer=l2(0.001)))
         self.model.add(BatchNormalization())
         self.model.add(MaxPooling2D((2, 2)))
-        self.model.add(Dropout(0.3))
+        self.model.add(Dropout(0.4))
 
         self.model.add(Conv2D(128, (3, 3), activation='relu', kernel_regularizer=l2(0.001)))
         self.model.add(BatchNormalization())
         self.model.add(MaxPooling2D((2, 2)))
-        self.model.add(Dropout(0.3))
+        self.model.add(Dropout(0.4))
 
         self.model.add(GlobalAveragePooling2D())
-        self.model.add(Dense(256))
-        self.model.add(LeakyReLU(alpha=0.1))
-        self.model.add(Dropout(0.3))
-        self.model.add(Dense(64))
-        self.model.add(LeakyReLU(alpha=0.1))
-        self.model.add(Dropout(0.3)) 
+        self.model.add(Dense(256, activation='relu', kernel_regularizer=l2(0.001)))
+        self.model.add(Dropout(0.4))
+        self.model.add(Dense(64, activation='relu', kernel_regularizer=l2(0.001)))
+        self.model.add(Dropout(0.4)) 
         self.model.add(Dense(9, activation='softmax'))
 
         # Configuración del guardado del mejor modelo
         self.best_model = ModelCheckpoint(filepath='model.keras', monitor='val_accuracy', save_best_only=True)
 
         # Compilación del modelo
-        self.optimi = Adam(learning_rate=0.0001)
+        self.optimi = Adam(learning_rate=0.0001) # Recomendado para un dataset grande y ruidoso
         self.model.compile(optimizer=self.optimi, loss='categorical_crossentropy', metrics=['accuracy'])
 
         # Entrenamiento del modelo
@@ -72,38 +70,35 @@ class Propuesta_gray:
     def CrearModelo(self):
         # Creación del modelo
         self.model = Sequential()
-        self.model.add(Conv2D(32, (3, 3), input_shape=(128, 128, 4), kernel_regularizer=l2(0.001)))
-        self.model.add(LeakyReLU(alpha=0.1))
+        self.model.add(Conv2D(32, (3, 3),  activation='relu' ,input_shape=(128, 128, 4), kernel_regularizer=l2(0.001)))
         self.model.add(BatchNormalization())
         self.model.add(MaxPooling2D((2, 2)))
-        self.model.add(Dropout(0.3))
+        self.model.add(Dropout(0.4))
 
-        self.model.add(Conv2D(64, (3, 3)))
-        self.model.add(LeakyReLU(alpha=0.1))
+        self.model.add(Conv2D(64, (3, 3),  activation='relu', kernel_regularizer=l2(0.001)))
         self.model.add(BatchNormalization())
         self.model.add(MaxPooling2D((2, 2)))
-        self.model.add(Dropout(0.3))
+        self.model.add(Dropout(0.4))
 
-        self.model.add(Conv2D(128, (3, 3)))
-        self.model.add(LeakyReLU(alpha=0.1))
+        self.model.add(Conv2D(128, (3, 3)), activation='relu', kernel_regularizer=l2(0.001))
         self.model.add(BatchNormalization())
         self.model.add(MaxPooling2D((2, 2)))
-        self.model.add(Dropout(0.3))
+        self.model.add(Dropout(0.4))
 
         self.model.add(GlobalAveragePooling2D())
-        self.model.add(Dense(256))
-        self.model.add(LeakyReLU(alpha=0.1))
-        self.model.add(Dropout(0.3))
-        self.model.add(Dense(64))
-        self.model.add(LeakyReLU(alpha=0.1))
-        self.model.add(Dropout(0.3)) 
+        self.model.add(Dense(256), activation='relu', kernel_regularizer=l2(0.001))
+        #self.model.add(LeakyReLU(alpha=0.1))
+        self.model.add(Dropout(0.4))
+        self.model.add(Dense(64), activation='relu', kernel_regularizer=l2(0.001))
+        #self.model.add(LeakyReLU(alpha=0.1))
+        self.model.add(Dropout(0.4)) 
         self.model.add(Dense(9, activation='softmax'))
 
         # Configuración del guardado del mejor modelo
         self.best_model = ModelCheckpoint(filepath='model.keras', monitor='val_accuracy', save_best_only=True)
 
         # Compilación del modelo
-        self.optimi = Adam(learning_rate=0.0001)
+        self.optimi = Adam(learning_rate=0.0001) # Recomendado para un dataset grande y ruidoso
         self.model.compile(optimizer=self.optimi, loss='categorical_crossentropy', metrics=['accuracy'])
 
         # Entrenamiento del modelo
