@@ -23,10 +23,6 @@ class ResNet50_rgb:
         # Añadimos nuestras propias capas densas
         x = base_model.output
         x = GlobalAveragePooling2D()(x)
-        x = Dense(256, activation='relu')(x)
-        x = Dropout(0.3)(x)
-        x = Dense(64, activation='relu')(x)
-        x = Dropout(0.3)(x)
         predictions = Dense(9, activation='softmax')(x)
 
         # Creamos el modelo completo
@@ -40,7 +36,7 @@ class ResNet50_rgb:
         self.model.compile(optimizer=self.optimi, loss='categorical_crossentropy', metrics=['accuracy'])
 
         # Entrenamiento
-        self.history = self.model.fit(self.X_train, self.y_train, epochs=100, batch_size=32,
+        self.history = self.model.fit(self.X_train, self.y_train, epochs=10, batch_size=32,
                                     validation_split=0.1, callbacks=[self.best_model])
 
         # Carga del mejor modelo
